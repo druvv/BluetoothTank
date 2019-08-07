@@ -1,4 +1,5 @@
 #include <Arduino.h>
+#include "bt_tank.h"
 #include "SoftwareSerial.h"
 #include "Servo.h"
 
@@ -7,8 +8,7 @@
 #define SOLENOID_PIN 39
 #define HORIZONTAL_SERVO_PIN 42
 #define VERTICAL_SERVO_PIN 43
-#define BT_RX 44
-#define BT_TX 45
+
 // - Motor H-Bridge Pins
 #define MOTOR_A_EN 53
 #define MOTOR_A_IN1 52
@@ -17,30 +17,70 @@
 #define MOTOR_B_IN4 49
 #define MOTOR_B_EN 48
 
-SoftwareSerial btSerial = SoftwareSerial(BT_TX, BT_RX);
+// Rx1 <-> BT TX
+// Tx1 <-> BT RX through voltage divider
+char c=' ';
+boolean NL = true;
 
+/*
++------------------------------------------------------------------+
+|                             Commands                             |
++---------+---------------------------+----------------------------+
+| Command |        Description        |          Response          |
++---------+---------------------------+----------------------------+
+|    L    |      Left Motor Speed     |            None            |
++---------+---------------------------+----------------------------+
+|    R    |     Right Motor Speed     |            None            |
++---------+---------------------------+----------------------------+
+|    S    |       Solenoid Fire       |           fired\n          |
++---------+---------------------------+----------------------------+
+|    A    |    Air Pump Charge Time   |  when received: charging\n |
+|         |                           |  when finished: charged\n  |
++---------+---------------------------+----------------------------+
+|    V    |  Vertical Servo Position  |            None            |
++---------+---------------------------+----------------------------+
+|    H    | Horizontal Servo Position |            None            |
++---------+---------------------------+----------------------------+
+ */
 
 void setup() {
   // put your setup code here, to run once:
-  Serial.begin(115200);
-  bluetoothSerial.begin(115200);
+  Serial.begin(9600);
+  Serial1.begin(9600);
   // Wait for serial pins to initialize
-  while (!Serial && !bluetoothSerial) {}
+  while (!Serial && !Serial1) {}
+  Serial.println("System started!");
 }
 
 void loop() {
-  syncBTandUSB();
+  //syncBTandUSB();
 }
 
 // Passes usb input to bluetooth and vice versa.
 void syncBTandUSB() {
-  if Serial.available() > 0 {
-    char s = Serial.read();
-    btSerial.write(s);
-  }
-
-  if btSerial.available() > 0 {
-    char b = btSerial.read();
-    Serial.write(b);
-  }
+  // Read from the Bluetooth module and send to the Arduino Serial Monitor
+    if (Serial1.available())
+    {
+        c = Serial1.read();
+        Serial.write(c);
+    }
+ 
+ 
+     // Read from the Serial Monitor and send to the Bluetooth module
+    if (Serial.available())
+    {
+        c = Serial.read();
+ 
+        // do not send line end characters to the HM-10
+        if (c!=10 & c!=13 ) 
+        {  
+             Serial1.write(c);
+        }
+ 
+        // Echo the user input to the main window. 
+        // If there is a new line print the ">" character.
+        if (NL) { Serial.print("\r\n>");  NL = false; }
+        Serial.write(c);
+        if (c==10) { NL = true; }
+    }
 }
