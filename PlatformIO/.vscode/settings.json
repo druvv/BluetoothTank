@@ -1,0 +1,6 @@
+{
+    "terminal.integrated.env.osx": {
+        "PATH": "/Users/Dhruv/.platformio/penv/bin:/Users/Dhruv/.platformio/penv:/Users/Dhruv/.rvm/gems/ruby-2.6.3/bin:/Users/Dhruv/.rvm/gems/ruby-2.6.3@global/bin:/Users/Dhruv/.rvm/rubies/ruby-2.6.3/bin:/Users/Dhruv/Library/Android/sdk/emulator:/Users/Dhruv/Library/Android/sdk/tools:/Users/Dhruv/Library/Android/sdk/platform-tools:/Users/Dhruv/.nvm/versions/node/v8.16.0/bin:/Users/Dhruv/anaconda3/bin:/usr/local/bin:/usr/bin:/bin:/usr/sbin:/sbin:/Library/Apple/usr/bin:/Library/Apple/bin:/Applications/VMware Fusion.app/Contents/Public:/Applications/Wireshark.app/Contents/MacOS:/usr/local/opt/fzf/bin:/Users/Dhruv/.rvm/bin",
+        "PLATFORMIO_CALLER": "vscode"
+    }
+}
