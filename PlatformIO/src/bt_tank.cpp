@@ -52,8 +52,49 @@ void setup() {
   Serial.println("System started!");
 }
 
+boolean started = false;
+
 void loop() {
   //syncBTandUSB();
+  if (!started) {
+    setLeft(200);
+    setRight(200);
+  }
+}
+
+// - MARK: Motor Speeds
+// s should be in between -255 and 255
+void setLeft(int s) {
+  if (s > 0) {
+    digitalWrite(MOTOR_A_IN1, HIGH);
+    digitalWrite(MOTOR_A_IN2, LOW);
+  } else if (s < 0) {
+    digitalWrite(MOTOR_A_IN1, LOW);
+    digitalWrite(MOTOR_A_IN2, HIGH);
+  } else {
+    digitalWrite(MOTOR_A_IN1, LOW);
+    digitalWrite(MOTOR_A_IN2, LOW);
+  }
+
+  s = abs(s);
+  analogWrite(MOTOR_A_EN, s);
+}
+
+// s should be in between -255 and 255
+void setRight(int s) {
+  if (s > 0) {
+    digitalWrite(MOTOR_B_IN3, LOW);
+    digitalWrite(MOTOR_B_IN4, HIGH);
+  } else if (s < 0)  {
+    digitalWrite(MOTOR_B_IN3, HIGH);
+    digitalWrite(MOTOR_B_IN4, LOW);
+  } else {
+    digitalWrite(MOTOR_B_IN3, LOW);
+    digitalWrite(MOTOR_B_IN4, LOW);
+  }
+
+  s = abs(s);
+  analogWrite(MOTOR_B_EN, s);
 }
 
 // Passes usb input to bluetooth and vice versa.
