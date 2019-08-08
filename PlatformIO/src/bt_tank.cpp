@@ -44,6 +44,11 @@ boolean NL = true;
 +---------+---------------------------+----------------------------+
  */
 
+
+char incomingChar;
+const char END_COMMAND_CHAR = '\n';
+String serialBuffer = "";
+
 void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
@@ -63,12 +68,65 @@ void loop() {
   //syncBTandUSB();
   //motorOrientationTest();
 
+  /* 
   // If we disconnect from bluetooth, stop everything.
   if (digitalRead(BT_STATE_PIN) == LOW) {
     stopAll();
+    return;
+  }
+  */
+
+  // Check if we have characters from either USB or bluetooth.
+  if (Serial.available() > 0 ) {
+     incomingChar = Serial.read();
+     handleChar(incomingChar);
+  } else if (Serial1.available() > 0) {
+     incomingChar = Serial1.read();
+     handleChar(incomingChar);
+  }
+}
+
+// Command Parsing
+
+void handleChar(char c) {
+  // If we reach the end of the command execute the command
+  if (c == END_COMMAND_CHAR) {
+    executeCommand();
+    return;
+  }
+  // Append to buffer
+  serialBuffer += c;
+}
+
+// Reads the command from the buffer and then clears it;
+void executeCommand() {
+
+  char commandCode = serialBuffer[0];
+  int commandEnd = serialBuffer.indexOf('\n', 1);
+  String commandText = serialBuffer.substring(1, commandEnd);
+  int commandValue = commandText.toInt();
+
+  switch (commandCode) {
+    case 'L':
+      setLeft(commandValue);
+      break;
+    case 'R':
+      setRight(commandValue);
+      break;
+    case 'S':
+      break;
+    case 'A':
+      break;
+    case 'V':
+      break;
+    case 'H':
+      break;
+    default:
+      break;
   }
 
-  delay(1000);
+  // Clear Serial Buffer
+  serialBuffer = "";
 }
 
 void stopAll() {
