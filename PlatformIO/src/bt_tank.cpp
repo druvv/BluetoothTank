@@ -6,16 +6,16 @@
 // Pin Macros
 #define AIR_PUMP_PIN 9
 #define SOLENOID_PIN 39
-#define HORIZONTAL_SERVO_PIN 42
-#define VERTICAL_SERVO_PIN 43
+#define HORIZONTAL_SERVO_PIN 2
+#define VERTICAL_SERVO_PIN 4
 
 // - Motor H-Bridge Pins
-#define MOTOR_A_EN 53
+#define MOTOR_A_EN 45
 #define MOTOR_A_IN1 52
 #define MOTOR_A_IN2 51
 #define MOTOR_B_IN3 50
 #define MOTOR_B_IN4 49
-#define MOTOR_B_EN 48
+#define MOTOR_B_EN 44
 
 // Rx1 <-> BT TX
 // Tx1 <-> BT RX through voltage divider
@@ -57,9 +57,12 @@ boolean started = false;
 void loop() {
   //syncBTandUSB();
   if (!started) {
-    setLeft(200);
-    setRight(200);
+    setLeft(100);
+    setRight(100);
+    started = true;
   }
+
+  delay(1000);
 }
 
 // - MARK: Motor Speeds
