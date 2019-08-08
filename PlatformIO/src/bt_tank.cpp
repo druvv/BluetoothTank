@@ -52,20 +52,25 @@ void setup() {
   Serial.println("System started!");
 }
 
-boolean started = false;
+boolean motorTestStarted = false;
 
 void loop() {
   //syncBTandUSB();
-  if (!started) {
-    setLeft(100);
-    setRight(100);
-    started = true;
-  }
+  //motorOrientationTest();
 
   delay(1000);
 }
 
 // - MARK: Motor Speeds
+
+void motorOrientationTest() {
+  if (!motorTestStarted) {
+    setLeft(100);
+    setRight(100);
+    motorTestStarted = true;
+  }
+}
+
 // s should be in between -255 and 255
 void setLeft(int s) {
   if (s > 0) {

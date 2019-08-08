@@ -1,6 +1,7 @@
 // Method definitions
 
 // Motor speeds
+void motorOrientationTest();
 void setLeft(int s);
 void setRight(int s);
 
