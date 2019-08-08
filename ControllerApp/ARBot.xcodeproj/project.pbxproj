@@ -1,0 +1,355 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 48;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		FC50DFDD1F8FA26A00564871 /* JoystickGameScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC50DFDC1F8FA26A00564871 /* JoystickGameScene.swift */; };
+		FC50DFDF1F8FA2EA00564871 /* AnalogJoystick.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC50DFDE1F8FA2EA00564871 /* AnalogJoystick.swift */; };
+		FC68A32A1FC5EFD8008DEB01 /* TimedLimter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC68A3291FC5EFD7008DEB01 /* TimedLimter.swift */; };
+		FC68A32C1FC5EFDD008DEB01 /* SyncLimiter.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC68A32B1FC5EFDD008DEB01 /* SyncLimiter.swift */; };
+		FC7CFCE61F7C2C5F007D0D13 /* BluetoothSerial.swift in Sources */ = {isa = PBXBuildFile; fileRef = FC7CFCE51F7C2C5F007D0D13 /* BluetoothSerial.swift */; };
+		FCADF8941F9A47ED00763C26 /* JoystickViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCADF8931F9A47ED00763C26 /* JoystickViewController.swift */; };
+		FCC5388B1F7C280F00B62FDF /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC5388A1F7C280F00B62FDF /* AppDelegate.swift */; };
+		FCC5388D1F7C280F00B62FDF /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = FCC5388C1F7C280F00B62FDF /* ViewController.swift */; };
+		FCC538901F7C280F00B62FDF /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCC5388E1F7C280F00B62FDF /* Main.storyboard */; };
+		FCC538921F7C280F00B62FDF /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = FCC538911F7C280F00B62FDF /* Assets.xcassets */; };
+		FCC538951F7C280F00B62FDF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = FCC538931F7C280F00B62FDF /* LaunchScreen.storyboard */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		FC50DFDC1F8FA26A00564871 /* JoystickGameScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoystickGameScene.swift; sourceTree = "<group>"; };
+		FC50DFDE1F8FA2EA00564871 /* AnalogJoystick.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AnalogJoystick.swift; sourceTree = "<group>"; };
+		FC68A3291FC5EFD7008DEB01 /* TimedLimter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimedLimter.swift; sourceTree = "<group>"; };
+		FC68A32B1FC5EFDD008DEB01 /* SyncLimiter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SyncLimiter.swift; sourceTree = "<group>"; };
+		FC7CFCE51F7C2C5F007D0D13 /* BluetoothSerial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BluetoothSerial.swift; sourceTree = "<group>"; };
+		FCADF8931F9A47ED00763C26 /* JoystickViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JoystickViewController.swift; sourceTree = "<group>"; };
+		FCC538871F7C280F00B62FDF /* ARBot.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ARBot.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		FCC5388A1F7C280F00B62FDF /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		FCC5388C1F7C280F00B62FDF /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		FCC5388F1F7C280F00B62FDF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		FCC538911F7C280F00B62FDF /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		FCC538941F7C280F00B62FDF /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		FCC538961F7C280F00B62FDF /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		FCC538841F7C280F00B62FDF /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		FCC5387E1F7C280F00B62FDF = {
+			isa = PBXGroup;
+			children = (
+				FCC538891F7C280F00B62FDF /* ARBot */,
+				FCC538881F7C280F00B62FDF /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		FCC538881F7C280F00B62FDF /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				FCC538871F7C280F00B62FDF /* ARBot.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		FCC538891F7C280F00B62FDF /* ARBot */ = {
+			isa = PBXGroup;
+			children = (
+				FC68A32B1FC5EFDD008DEB01 /* SyncLimiter.swift */,
+				FC68A3291FC5EFD7008DEB01 /* TimedLimter.swift */,
+				FC7CFCE51F7C2C5F007D0D13 /* BluetoothSerial.swift */,
+				FC50DFDC1F8FA26A00564871 /* JoystickGameScene.swift */,
+				FC50DFDE1F8FA2EA00564871 /* AnalogJoystick.swift */,
+				FCC5388A1F7C280F00B62FDF /* AppDelegate.swift */,
+				FCC5388C1F7C280F00B62FDF /* ViewController.swift */,
+				FCADF8931F9A47ED00763C26 /* JoystickViewController.swift */,
+				FCC5388E1F7C280F00B62FDF /* Main.storyboard */,
+				FCC538911F7C280F00B62FDF /* Assets.xcassets */,
+				FCC538931F7C280F00B62FDF /* LaunchScreen.storyboard */,
+				FCC538961F7C280F00B62FDF /* Info.plist */,
+			);
+			path = ARBot;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		FCC538861F7C280F00B62FDF /* ARBot */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = FCC538991F7C280F00B62FDF /* Build configuration list for PBXNativeTarget "ARBot" */;
+			buildPhases = (
+				FCC538831F7C280F00B62FDF /* Sources */,
+				FCC538841F7C280F00B62FDF /* Frameworks */,
+				FCC538851F7C280F00B62FDF /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = ARBot;
+			productName = ARBot;
+			productReference = FCC538871F7C280F00B62FDF /* ARBot.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		FCC5387F1F7C280F00B62FDF /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0900;
+				LastUpgradeCheck = 0900;
+				ORGANIZATIONNAME = "Dhruv Sringari";
+				TargetAttributes = {
+					FCC538861F7C280F00B62FDF = {
+						CreatedOnToolsVersion = 9.0;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = FCC538821F7C280F00B62FDF /* Build configuration list for PBXProject "ARBot" */;
+			compatibilityVersion = "Xcode 8.0";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = FCC5387E1F7C280F00B62FDF;
+			productRefGroup = FCC538881F7C280F00B62FDF /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				FCC538861F7C280F00B62FDF /* ARBot */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		FCC538851F7C280F00B62FDF /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FCC538951F7C280F00B62FDF /* LaunchScreen.storyboard in Resources */,
+				FCC538921F7C280F00B62FDF /* Assets.xcassets in Resources */,
+				FCC538901F7C280F00B62FDF /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		FCC538831F7C280F00B62FDF /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				FCC5388D1F7C280F00B62FDF /* ViewController.swift in Sources */,
+				FC50DFDF1F8FA2EA00564871 /* AnalogJoystick.swift in Sources */,
+				FCC5388B1F7C280F00B62FDF /* AppDelegate.swift in Sources */,
+				FC50DFDD1F8FA26A00564871 /* JoystickGameScene.swift in Sources */,
+				FC68A32A1FC5EFD8008DEB01 /* TimedLimter.swift in Sources */,
+				FCADF8941F9A47ED00763C26 /* JoystickViewController.swift in Sources */,
+				FC7CFCE61F7C2C5F007D0D13 /* BluetoothSerial.swift in Sources */,
+				FC68A32C1FC5EFDD008DEB01 /* SyncLimiter.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		FCC5388E1F7C280F00B62FDF /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FCC5388F1F7C280F00B62FDF /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		FCC538931F7C280F00B62FDF /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				FCC538941F7C280F00B62FDF /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		FCC538971F7C280F00B62FDF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		FCC538981F7C280F00B62FDF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 11.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		FCC5389A1F7C280F00B62FDF /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M23B6AYLDX;
+				INFOPLIST_FILE = ARBot/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ebuyworld.ARBot;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		FCC5389B1F7C280F00B62FDF /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = M23B6AYLDX;
+				INFOPLIST_FILE = ARBot/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.ebuyworld.ARBot;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_VERSION = 4.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		FCC538821F7C280F00B62FDF /* Build configuration list for PBXProject "ARBot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FCC538971F7C280F00B62FDF /* Debug */,
+				FCC538981F7C280F00B62FDF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		FCC538991F7C280F00B62FDF /* Build configuration list for PBXNativeTarget "ARBot" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				FCC5389A1F7C280F00B62FDF /* Debug */,
+				FCC5389B1F7C280F00B62FDF /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = FCC5387F1F7C280F00B62FDF /* Project object */;
+}
