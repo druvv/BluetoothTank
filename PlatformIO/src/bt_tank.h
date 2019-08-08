@@ -1,5 +1,7 @@
 // Method definitions
 
+void stopAll();
+
 // Motor speeds
 void motorOrientationTest();
 void setLeft(int s);

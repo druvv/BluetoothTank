@@ -8,6 +8,7 @@
 #define SOLENOID_PIN 39
 #define HORIZONTAL_SERVO_PIN 2
 #define VERTICAL_SERVO_PIN 4
+#define BT_STATE_PIN 39
 
 // - Motor H-Bridge Pins
 #define MOTOR_A_EN 45
@@ -47,6 +48,10 @@ void setup() {
   // put your setup code here, to run once:
   Serial.begin(9600);
   Serial1.begin(9600);
+
+  // Pin init
+  pinMode(BT_STATE_PIN, INPUT);
+
   // Wait for serial pins to initialize
   while (!Serial && !Serial1) {}
   Serial.println("System started!");
@@ -58,7 +63,17 @@ void loop() {
   //syncBTandUSB();
   //motorOrientationTest();
 
+  // If we disconnect from bluetooth, stop everything.
+  if (digitalRead(BT_STATE_PIN) == LOW) {
+    stopAll();
+  }
+
   delay(1000);
+}
+
+void stopAll() {
+  setLeft(0);
+  setRight(0);
 }
 
 // - MARK: Motor Speeds
