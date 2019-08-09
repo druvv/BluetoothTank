@@ -23,6 +23,9 @@
 char c=' ';
 boolean NL = true;
 
+unsigned long currTime;
+unsigned long airPumpStartTime;
+
 /*
 +------------------------------------------------------------------+
 |                             Commands                             |
