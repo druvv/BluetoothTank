@@ -9,12 +9,33 @@
 import UIKit
 import CoreBluetooth
 
-protocol ARBotCommunicationDelegate {
+enum CanonStatus {
+    case uncharged
+    case charging
+    case readyToFire
+}
+
+enum CanonAdjustDir: Int {
+    case up
+    case down
+    case left
+    case right
+    case stop
+}
+
+protocol ARBotCommunicationDelegate: class {
     func update(speedLeft: Int, speedRight: Int)
     func stop(left: Bool, right: Bool)
+    func chargeCannon(miliseconds: Int)
+    func fireCannon()
+    func moveCannon(_ direction: CanonAdjustDir)
+    var cannonStatusDidUpdate: ((CanonStatus) -> Void)? { get set }
 }
 
 class ViewController: UIViewController {
+
+    // Will be used by delegate
+    var cannonStatusDidUpdate: ((CanonStatus) -> Void)?
     
     enum BluetoothStatus {
         case off
@@ -70,6 +91,19 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: ARBotCommunicationDelegate {
+    func chargeCannon(miliseconds: Int) {
+        serial.sendMessageToDevice("A\(miliseconds)\n")
+    }
+
+    func fireCannon() {
+        serial.sendMessageToDevice("S\n")
+    }
+
+    func moveCannon(_ direction: CanonAdjustDir) {
+        serial.sendMessageToDevice("C\(direction.rawValue)\n")
+    }
+
+
     func stop(left: Bool, right: Bool) {
         if left && right {
             self.serial.sendMessageToDevice("L0\nR0\n")
@@ -87,8 +121,15 @@ extension ViewController: ARBotCommunicationDelegate {
     
     func update(speedLeft: Int, speedRight: Int) {
         limiter.execute {
-            print("Left: \(speedLeft)       Right: \(speedRight)")
-            self.serial.sendMessageToDevice("L\(speedLeft)\nR\(speedRight)\n")
+            print("Left: \(speedLeft == -256 ? "nc" : String(speedLeft))       Right: \(speedRight == -256 ? "nc" : String(speedRight))")
+
+            if speedLeft != NO_CHANGE && speedRight != NO_CHANGE {
+                self.serial.sendMessageToDevice("L\(speedLeft)\nR\(speedRight)\n")
+            } else if speedLeft != NO_CHANGE {
+                self.serial.sendMessageToDevice("L\(speedLeft)\n")
+            } else if speedRight != NO_CHANGE {
+                self.serial.sendMessageToDevice("R\(speedRight)\n")
+            }
         }
         
         /*
@@ -122,6 +163,19 @@ extension ViewController: BluetoothSerialDelegate {
             serial.startScan()
         default:
             setBluetooth(status: .unknown)
+        }
+    }
+
+    func serialDidReceiveString(_ message: String) {
+        switch message {
+        case "F":
+            cannonStatusDidUpdate?(.uncharged)
+        case "C":
+            cannonStatusDidUpdate?(.charging)
+        case "R":
+            cannonStatusDidUpdate?(.readyToFire)
+        default:
+            print("Unknown message received: \(message)")
         }
     }
     
