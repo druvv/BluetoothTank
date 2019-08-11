@@ -5,10 +5,10 @@
 
 // Pin Macros
 #define AIR_PUMP_PIN 9
-#define SOLENOID_PIN 39
+#define SOLENOID_PIN 38
 #define HORIZONTAL_SERVO_PIN 2
 #define VERTICAL_SERVO_PIN 4
-#define BT_STATE_PIN 39
+#define BT_STATE_PIN 41
 
 // - Motor H-Bridge Pins
 #define MOTOR_A_EN 45
@@ -23,30 +23,40 @@
 char c=' ';
 boolean NL = true;
 
-unsigned long currTime;
-unsigned long airPumpStartTime;
+unsigned long currTime = 0;
+
+// Air pump charging
+unsigned long airPumpStartTime = 0;
+unsigned long chargeDuration = 0;
+
+// Solenoid firing
+unsigned long solenoidStartTime = 0;
+unsigned long solenoidFireDuration = 1000;
 
 /*
-+------------------------------------------------------------------+
-|                             Commands                             |
-+---------+---------------------------+----------------------------+
-| Command |        Description        |          Response          |
-+---------+---------------------------+----------------------------+
-|    L    |      Left Motor Speed     |            None            |
-+---------+---------------------------+----------------------------+
-|    R    |     Right Motor Speed     |            None            |
-+---------+---------------------------+----------------------------+
-|    S    |       Solenoid Fire       |           fired\n          |
-+---------+---------------------------+----------------------------+
-|    A    |    Air Pump Charge Time   |  when received: charging\n |
-|         |                           |  when finished: charged\n  |
-+---------+---------------------------+----------------------------+
-|    V    |  Vertical Servo Position  |            None            |
-+---------+---------------------------+----------------------------+
-|    H    | Horizontal Servo Position |            None            |
-+---------+---------------------------+----------------------------+
+╔════════════════════════════════════════════════════════════════════════╗
+║                                Commands                                ║
+╠═════════╦══════════════════════╦════════════════════╦══════════════════╣
+║ Command ║      Description     ║    Command Value   ║     Response     ║
+╠═════════╬══════════════════════╬════════════════════╬══════════════════╣
+║    L    ║   Left Motor Speed   ║  Speed [-255,255]  ║       None       ║
+╠═════════╬══════════════════════╬════════════════════╬══════════════════╣
+║    R    ║   Right Motor Speed  ║  Speed [-255,255]  ║       None       ║
+╠═════════╬══════════════════════╬════════════════════╬══════════════════╣
+║    S    ║     Solenoid Fire    ║        None        ║         F        ║
+╠═════════╬══════════════════════╬════════════════════╬══════════════════╣
+║    A    ║ Air Pump Charge Time ║ Time (miliseconds) ║ when received: C ║
+║         ║                      ║                    ║ when finished: R ║
+╠═════════╬══════════════════════╬════════════════════╬══════════════════╣
+║    C    ║    Adjust Pan/Tilt   ║  Direction Command ║       None       ║
+╠═════════╬══════════════════════╬════════════════════╬══════════════════╣
+║         ║                      ║ 0: up              ║                  ║
+║         ║                      ║ 1: down            ║                  ║
+║         ║  Direction Commands  ║ 2: left            ║                  ║
+║         ║                      ║ 3: right           ║                  ║
+║         ║                      ║ 4: stop            ║                  ║
+╚═════════╩══════════════════════╩════════════════════╩══════════════════╝
  */
-
 
 char incomingChar;
 const char END_COMMAND_CHAR = '\n';
@@ -58,7 +68,12 @@ void setup() {
   Serial1.begin(9600);
 
   // Pin init
-  pinMode(BT_STATE_PIN, INPUT);
+  pinMode(BT_STATE_PIN, INPUT_PULLUP);
+  pinMode(AIR_PUMP_PIN, OUTPUT);
+  pinMode(SOLENOID_PIN, OUTPUT);
+
+  // Have to close the solenoid manually
+  closeSolenoid();
 
   // Wait for serial pins to initialize
   while (!Serial && !Serial1) {}
@@ -70,14 +85,18 @@ boolean motorTestStarted = false;
 void loop() {
   //syncBTandUSB();
   //motorOrientationTest();
-
-  /* 
+  
   // If we disconnect from bluetooth, stop everything.
+  /*
   if (digitalRead(BT_STATE_PIN) == LOW) {
     stopAll();
+    delay(1000);
     return;
   }
   */
+
+  currTime = millis();
+  timeTick();
 
   // Check if we have characters from either USB or bluetooth.
   if (Serial.available() > 0 ) {
@@ -89,7 +108,7 @@ void loop() {
   }
 }
 
-// Command Parsing
+// MARK: Command Parsing
 
 void handleChar(char c) {
   // If we reach the end of the command execute the command
@@ -117,12 +136,24 @@ void executeCommand() {
       setRight(commandValue);
       break;
     case 'S':
+      //solenoidStartTime = currTime;
+      //openSolenoid();
+      openSolenoid();
+      delay(250);
+      closeSolenoid();
+      respond('F');
       break;
     case 'A':
+      chargeDuration = commandValue;
+      airPumpStartTime = currTime;
+      startCharging();
+      respond('C');
       break;
     case 'V':
+      openSolenoid();
       break;
     case 'H':
+      closeSolenoid();
       break;
     default:
       break;
@@ -135,9 +166,47 @@ void executeCommand() {
 void stopAll() {
   setLeft(0);
   setRight(0);
+
+  stopCharging();
+  chargeDuration = 0;
+  airPumpStartTime = 0;
 }
 
-// - MARK: Motor Speeds
+// MARK: Timing
+
+void timeTick() {
+  // Disable air pump if charge time has passed
+  if (airPumpStartTime != 0) {
+    if (currTime - airPumpStartTime > chargeDuration) {
+      stopCharging();
+      chargeDuration = 0;
+      airPumpStartTime = 0;
+      respond('R');
+    }
+  }
+}
+
+// MARK: Air Pump
+
+void startCharging() {
+  digitalWrite(AIR_PUMP_PIN, HIGH);
+}
+
+void stopCharging() {
+  digitalWrite(AIR_PUMP_PIN, LOW);
+}
+
+// Mark: Solenoid
+
+void openSolenoid() {
+  digitalWrite(SOLENOID_PIN, HIGH);
+}
+
+void closeSolenoid() {
+  digitalWrite(SOLENOID_PIN, LOW);
+}
+
+// MARK: Motors
 
 void motorOrientationTest() {
   if (!motorTestStarted) {
@@ -179,6 +248,14 @@ void setRight(int s) {
 
   s = abs(s);
   analogWrite(MOTOR_B_EN, s);
+}
+
+// MARK: Bluetooth
+
+// Responds on both usb and bluetooth lines.
+void respond(char c) {
+  Serial.write(c);
+  Serial1.write(c);
 }
 
 // Passes usb input to bluetooth and vice versa.
