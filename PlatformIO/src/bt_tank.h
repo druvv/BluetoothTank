@@ -1,3 +1,6 @@
+
+enum MountDirection { up, down, left, right, stop };
+
 // Method definitions
 
 // Command Parsing
@@ -16,6 +19,9 @@ void stopCharging();
 // Solenoid
 void openSolenoid();
 void closeSolenoid();
+
+// Servo Mount
+void moveMount(enum MountDirection direction);
 
 // Motor speeds
 void motorOrientationTest();

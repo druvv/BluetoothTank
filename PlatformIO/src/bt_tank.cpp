@@ -1,7 +1,6 @@
 #include <Arduino.h>
 #include "bt_tank.h"
-#include "SoftwareSerial.h"
-#include "Servo.h"
+#include "Servo/Servo.h"
 
 // Pin Macros
 #define AIR_PUMP_PIN 9
@@ -32,6 +31,22 @@ unsigned long chargeDuration = 0;
 // Solenoid firing
 unsigned long solenoidStartTime = 0;
 unsigned long solenoidFireDuration = 1000;
+
+// Mount moving
+int horizServoUpper = 175;
+int horizServoPos = 90;
+int horizServoLower = 40;
+int vertServoUpper = 40;
+int vertServoPos = 0;
+int vertServoLower = 0;
+
+Servo horizServo;
+Servo vertServo;
+
+enum MountDirection mountMoveDirection = stop;
+#define MOUNT_UPDATE_RATE 20 // ms
+#define MOUNT_STEP_SIZE 1 // degrees
+unsigned long mountLastMoveTime = 0;
 
 /*
 ╔════════════════════════════════════════════════════════════════════════╗
@@ -71,9 +86,20 @@ void setup() {
   pinMode(BT_STATE_PIN, INPUT_PULLUP);
   pinMode(AIR_PUMP_PIN, OUTPUT);
   pinMode(SOLENOID_PIN, OUTPUT);
+/*
+  // Servo init
+  horizServo.attach(HORIZONTAL_SERVO_PIN);
+  vertServo.attach(VERTICAL_SERVO_PIN);
+  // Move servos to starting position
+  horizServo.write(90);
+  vertServo.write(0);
+  */
 
-  // Have to close the solenoid manually
+  // Have to close the solenoid initially
   closeSolenoid();
+
+  currTime = millis();
+  mountLastMoveTime = millis();
 
   // Wait for serial pins to initialize
   while (!Serial && !Serial1) {}
@@ -149,11 +175,8 @@ void executeCommand() {
       startCharging();
       respond('C');
       break;
-    case 'V':
-      openSolenoid();
-      break;
-    case 'H':
-      closeSolenoid();
+    case 'C':
+      mountMoveDirection = (enum MountDirection) commandValue;
       break;
     default:
       break;
@@ -184,6 +207,14 @@ void timeTick() {
       respond('R');
     }
   }
+
+  // Move the mount
+  if (mountMoveDirection != stop) {
+    if (currTime - mountLastMoveTime > MOUNT_UPDATE_RATE) {
+      mountLastMoveTime = currTime;
+      moveMount(mountMoveDirection);
+    }
+  }
 }
 
 // MARK: Air Pump
@@ -204,6 +235,38 @@ void openSolenoid() {
 
 void closeSolenoid() {
   digitalWrite(SOLENOID_PIN, LOW);
+}
+
+// MARK: Mount
+void moveMount(enum MountDirection direction) {
+  switch (direction) {
+  case up:
+    if (vertServoPos + MOUNT_STEP_SIZE <= vertServoUpper) {
+      vertServoPos += MOUNT_STEP_SIZE;
+      vertServo.write(vertServoPos);
+    }
+    break;
+  case down:
+    if (vertServoPos - MOUNT_STEP_SIZE >= vertServoLower) {
+      vertServoPos -= MOUNT_STEP_SIZE;
+      vertServo.write(vertServoPos);
+    }
+    break;
+  case left:
+    if (horizServoPos + MOUNT_STEP_SIZE <= horizServoUpper) {
+      horizServoPos += MOUNT_STEP_SIZE;
+      horizServo.write(horizServoPos);
+    }
+    break;
+  case right:
+    if (horizServoPos - MOUNT_STEP_SIZE >= horizServoLower) {
+      horizServoPos -= MOUNT_STEP_SIZE;
+      horizServo.write(horizServoPos);
+    }
+    break;
+  case stop:
+    break;
+  }
 }
 
 // MARK: Motors
