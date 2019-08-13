@@ -41,7 +41,7 @@ class JoystickViewController: UIViewController, ARBotCommunicationDelegate {
         twoFingerTap.numberOfTouchesRequired = 2
         view.addGestureRecognizer(twoFingerTap)
 
-        handleStatus(.uncharged)
+        unlockCommands()
     }
 
     func handleStatus(_ status: CanonStatus) {
@@ -52,19 +52,15 @@ class JoystickViewController: UIViewController, ARBotCommunicationDelegate {
             cannonStatusLabel.text = "Uncharged"
             cannonStatusLabel.textColor = .darkGray
         case .charging:
-            chargeButton.isEnabled = false
-            fireButton.isEnabled = false
             cannonStatusLabel.text = "Charging..."
             cannonStatusLabel.textColor = UIColor(red:1.00, green:0.60, blue:0.00, alpha:1.0)
         case .readyToFire:
-            chargeButton.isEnabled = false
-            fireButton.isEnabled = true
             cannonStatusLabel.text = "Ready to fire"
             cannonStatusLabel.textColor = UIColor(red:0.09, green:0.93, blue:0.16, alpha:1.0)
         }
     }
 
-    var commandsLocked = true
+    var commandsLocked = false
 
     @objc func toggleCommandLock() {
         if commandsLocked {
@@ -126,7 +122,7 @@ class JoystickViewController: UIViewController, ARBotCommunicationDelegate {
     }
 
     @IBAction func charge() {
-        dataDelegate?.chargeCannon(miliseconds: 10 * 1000) // 10 seconds
+        dataDelegate?.chargeCannon(miliseconds: 2 * 1000) // 10 seconds
     }
 
     @IBAction func fire() {

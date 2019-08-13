@@ -99,9 +99,9 @@
                                                                 </constraints>
                                                                 <state key="normal" image="b_up"/>
                                                                 <connections>
+                                                                    <action selector="downPressed" destination="MZf-db-qcn" eventType="touchDown" id="l1L-dN-tCj"/>
                                                                     <action selector="touchUp" destination="MZf-db-qcn" eventType="touchUpOutside" id="5Bm-eX-GW6"/>
                                                                     <action selector="touchUp" destination="MZf-db-qcn" eventType="touchUpInside" id="qyg-sY-SmH"/>
-                                                                    <action selector="upPressed" destination="MZf-db-qcn" eventType="touchDown" id="oVg-ed-AYE"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="01g-SY-Btr">
@@ -125,9 +125,9 @@
                                                                 </constraints>
                                                                 <state key="normal" image="b_down"/>
                                                                 <connections>
-                                                                    <action selector="downPressed" destination="MZf-db-qcn" eventType="touchDown" id="tge-59-Kjk"/>
                                                                     <action selector="touchUp" destination="MZf-db-qcn" eventType="touchUpOutside" id="KdM-Cz-bR3"/>
                                                                     <action selector="touchUp" destination="MZf-db-qcn" eventType="touchUpInside" id="lXR-Ft-N3V"/>
+                                                                    <action selector="upPressed" destination="MZf-db-qcn" eventType="touchDown" id="5fC-Do-JJY"/>
                                                                 </connections>
                                                             </button>
                                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hrr-ZA-5D2">
@@ -298,9 +298,9 @@
         </scene>
     </scenes>
     <resources>
-        <image name="b_down" width="32" height="32"/>
-        <image name="b_left" width="32" height="32"/>
-        <image name="b_right" width="32" height="32"/>
-        <image name="b_up" width="32" height="32"/>
+        <image name="b_down" width="50" height="50"/>
+        <image name="b_left" width="50" height="50"/>
+        <image name="b_right" width="50" height="50"/>
+        <image name="b_up" width="50" height="50"/>
     </resources>
 </document>
