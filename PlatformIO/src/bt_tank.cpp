@@ -4,7 +4,7 @@
 
 // Pin Macros
 #define AIR_PUMP_PIN 9
-#define SOLENOID_PIN 38
+#define SOLENOID_PIN 30
 #define HORIZONTAL_SERVO_PIN 2
 #define VERTICAL_SERVO_PIN 4
 #define BT_STATE_PIN 41
@@ -63,6 +63,8 @@ unsigned long mountLastMoveTime = 0;
 ║    A    ║ Air Pump Charge Time ║ Time (miliseconds) ║ when received: C ║
 ║         ║                      ║                    ║ when finished: R ║
 ╠═════════╬══════════════════════╬════════════════════╬══════════════════╣
+║    D    ║    Dart Load Mode    ║  0 (Off) or 1 (On) ║       None       ║
+╠═════════╬══════════════════════╬════════════════════╬══════════════════╣
 ║    C    ║    Adjust Pan/Tilt   ║  Direction Command ║       None       ║
 ╠═════════╬══════════════════════╬════════════════════╬══════════════════╣
 ║         ║                      ║ 0: up              ║                  ║
@@ -86,16 +88,8 @@ void setup() {
   pinMode(BT_STATE_PIN, INPUT_PULLUP);
   pinMode(AIR_PUMP_PIN, OUTPUT);
   pinMode(SOLENOID_PIN, OUTPUT);
-/*
-  // Servo init
-  horizServo.attach(HORIZONTAL_SERVO_PIN);
-  vertServo.attach(VERTICAL_SERVO_PIN);
-  // Move servos to starting position
-  horizServo.write(90);
-  vertServo.write(0);
-  */
 
-  // Have to close the solenoid initially
+  attachServos();
   closeSolenoid();
 
   currTime = millis();
@@ -178,6 +172,14 @@ void executeCommand() {
     case 'C':
       mountMoveDirection = (enum MountDirection) commandValue;
       break;
+    case 'D':
+      if (commandValue == 0) {
+        attachServos();
+        closeSolenoid();
+      } else {
+        detachServos();
+        openSolenoid();
+      }
     default:
       break;
   }
@@ -238,6 +240,23 @@ void closeSolenoid() {
 }
 
 // MARK: Mount
+
+void attachServos() {
+  // Servo init
+  horizServo.attach(HORIZONTAL_SERVO_PIN);
+  vertServo.attach(VERTICAL_SERVO_PIN);
+  // Move servos to starting position
+  horizServo.write(90);
+  vertServo.write(0);
+  horizServoPos = 90;
+  vertServoPos = 0;
+}
+
+void detachServos() {
+  horizServo.detach();
+  vertServo.detach();
+}
+
 void moveMount(enum MountDirection direction) {
   switch (direction) {
   case up:

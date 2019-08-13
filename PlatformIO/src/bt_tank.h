@@ -21,6 +21,8 @@ void openSolenoid();
 void closeSolenoid();
 
 // Servo Mount
+void attachServos();
+void detachServos();
 void moveMount(enum MountDirection direction);
 
 // Motor speeds
