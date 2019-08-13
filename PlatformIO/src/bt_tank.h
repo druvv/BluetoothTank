@@ -31,7 +31,5 @@ void setLeft(int s);
 void setRight(int s);
 
 // Bluetooth
-// Respond with a message;
 void respond(char c);
-// Passes usb input to bluetooth and vice versa.
 void syncBTandUSB();

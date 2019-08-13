@@ -17,11 +17,6 @@
 #define MOTOR_B_IN4 49
 #define MOTOR_B_EN 44
 
-// Rx1 <-> BT TX
-// Tx1 <-> BT RX through voltage divider
-char c=' ';
-boolean NL = true;
-
 unsigned long currTime = 0;
 
 // Air pump charging
@@ -36,6 +31,7 @@ unsigned long solenoidFireDuration = 1000;
 int horizServoUpper = 175;
 int horizServoPos = 90;
 int horizServoLower = 40;
+
 int vertServoUpper = 40;
 int vertServoPos = 0;
 int vertServoLower = 0;
@@ -96,6 +92,8 @@ void setup() {
   mountLastMoveTime = millis();
 
   // Wait for serial pins to initialize
+  // Serial - The USB interface
+  // Serial1 - Connected to the HM-10 bluetooth module
   while (!Serial && !Serial1) {}
   Serial.println("System started!");
 }
@@ -180,6 +178,7 @@ void executeCommand() {
         detachServos();
         openSolenoid();
       }
+      break;
     default:
       break;
   }
@@ -210,7 +209,8 @@ void timeTick() {
     }
   }
 
-  // Move the mount
+  // Once every MOUNT_UPDATE_RATE ms, move the mount in the direction set by the bluetooth connection.
+  // If set to stop, do nothing.
   if (mountMoveDirection != stop) {
     if (currTime - mountLastMoveTime > MOUNT_UPDATE_RATE) {
       mountLastMoveTime = currTime;
@@ -257,6 +257,7 @@ void detachServos() {
   vertServo.detach();
 }
 
+// Moves the servo one degree in the specified direction if the configured upper and lower bounds permit it.
 void moveMount(enum MountDirection direction) {
   switch (direction) {
   case up:
@@ -334,13 +335,17 @@ void setRight(int s) {
 
 // MARK: Bluetooth
 
-// Responds on both usb and bluetooth lines.
+// Writes the given character to the USB and bluetooth Serial connections.
 void respond(char c) {
   Serial.write(c);
   Serial1.write(c);
 }
 
+char c=' ';
+boolean NL = true;
+
 // Passes usb input to bluetooth and vice versa.
+// Only really used to program the HM-10 module and set it's name etc.
 void syncBTandUSB() {
   // Read from the Bluetooth module and send to the Arduino Serial Monitor
     if (Serial1.available())
