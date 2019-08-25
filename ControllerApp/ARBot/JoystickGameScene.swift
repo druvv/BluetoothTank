@@ -21,7 +21,11 @@ class JoystickGameScene: SKScene {
     
     override func didMove(to view: SKView) {
         
-        backgroundColor = .white
+        if #available(iOS 13.0, *) {
+            backgroundColor = .tertiarySystemBackground
+        } else {
+            backgroundColor = .white
+        }
         stick.position = CGPoint(x: view.frame.midX, y: view.frame.midY)
         stick.stick.color = UIColor(red:66/255.0, green:111/255.0, blue:245/255.0, alpha:1.0)
         addChild(stick)
@@ -77,6 +81,8 @@ class JoystickGameScene: SKScene {
 
         return (leftSpeed, rightSpeed)
     }
+
+    // MARK: - Graphs
 
     let floatyPI = CGFloat(Double.pi)
 
